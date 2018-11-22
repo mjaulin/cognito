@@ -1,0 +1,10 @@
+aws:
+  region: eu-west-1
+
+authentification:
+  active: true
+  mock.identifiant: ZK1133
+  jwt:
+    public.key.url: https://public-keys.auth.elb.${aws.region}.amazonaws.com
+    key.user.id: kid
+    header: x-amzn-oidc-data
