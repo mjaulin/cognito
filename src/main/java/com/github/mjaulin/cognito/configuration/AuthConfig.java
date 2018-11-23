@@ -1,17 +1,19 @@
 package com.github.mjaulin.cognito.configuration;
 
+import com.github.mjaulin.cognito.filter.AuthFilter;
 import com.github.mjaulin.cognito.service.AuthService;
 import com.github.mjaulin.cognito.service.JwtTokenProvider;
 import com.github.mjaulin.cognito.service.MockProvider;
 import com.github.mjaulin.cognito.service.UserIdProvider;
-import com.github.mjaulin.cognito.filter.AuthFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @EnableWebSecurity
 public class AuthConfig extends WebSecurityConfigurerAdapter {
@@ -22,18 +24,18 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "**/images", "/healthcheck", "/error", "/request").permitAll()
+                .antMatchers("/ko", "/favicon.ico").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterAfter(authFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint((req, resp, e) -> resp.sendRedirect(req.getContextPath() + "/error"))
+                .addFilterBefore(authFilter(), BasicAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint((req, resp, e) ->  resp.sendError(HttpStatus.UNAUTHORIZED.value()))
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
 
     @Bean
     public AuthFilter authFilter() {
-        return new AuthFilter(userIdProvider(), authService());
+        return new AuthFilter(userIdProvider(), authService(), (req, resp, e) -> resp.sendRedirect(req.getContextPath() + "/ko"));
     }
 
     @Bean

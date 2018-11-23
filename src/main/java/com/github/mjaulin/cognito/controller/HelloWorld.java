@@ -26,4 +26,9 @@ public class HelloWorld {
                 String.join("", headers.entrySet().stream().map(entry -> "<li>" + entry.getKey() + " : " + String.join(", ",entry.getValue()) + "</li>").collect(Collectors.toList())) +
                 "</ul>");
     }
+
+    @GetMapping(value = "/ko")
+    public ResponseEntity error() {
+        return ResponseEntity.ok("Not authorized");
+    }
 }

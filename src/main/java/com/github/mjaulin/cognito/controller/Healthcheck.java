@@ -11,6 +11,6 @@ public class Healthcheck {
 
     @GetMapping
     public ResponseEntity healthcheck() {
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("ok");
     }
 }
