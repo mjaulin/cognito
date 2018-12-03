@@ -4,11 +4,16 @@ aws:
 authentification:
   active: true
   mock.identifiant: m.jaulin
+  users: test,
   jwt:
     public.key.url: https://public-keys.auth.elb.${aws.region}.amazonaws.com
     public.key.heaeder.id: kid
     key.user.id: username
     header: x-amzn-oidc-data
+
+server:
+  servlet:
+    context-path: /mja
 
 logging:
   level:

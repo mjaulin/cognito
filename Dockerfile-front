@@ -1,0 +1,4 @@
+FROM nginx
+
+COPY front/conf /etc/nginx/conf.d
+COPY front/ssl /etc/nginx/ssl

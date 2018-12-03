@@ -39,7 +39,7 @@ public class JwtTokenProviderTest {
 
         // then
         assertNotNull(jwt);
-        assertEquals(jwt.getClaim("username").asString(), "ZK1133");
+        assertEquals(jwt.getClaim("username").asString(), "m.jaulin");
     }
 
     private static ECPublicKey getPublicKey(String publicKey) {

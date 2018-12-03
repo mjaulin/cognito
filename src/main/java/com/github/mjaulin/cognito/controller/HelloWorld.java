@@ -31,4 +31,14 @@ public class HelloWorld {
     public ResponseEntity error() {
         return ResponseEntity.ok("Not authorized");
     }
+
+    @GetMapping(value = "/css")
+    public ResponseEntity css() {
+        return ResponseEntity.ok("css");
+    }
+
+    @GetMapping(value = "/css/test")
+    public ResponseEntity cssTest() {
+        return ResponseEntity.ok("css test");
+    }
 }
