@@ -1,15 +1,3 @@
-aws:
-  region: eu-west-1
-
-authentification:
-  active: true
-  mock.identifiant: m.jaulin
-  jwt:
-    public.key.url: https://public-keys.auth.elb.${aws.region}.amazonaws.com
-    public.key.heaeder.id: kid
-    key.user.id: username
-    header: x-amzn-oidc-data
-
 logging:
   level:
     com.github.mjaulin: DEBUG
